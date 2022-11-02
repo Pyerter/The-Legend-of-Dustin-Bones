@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Paused = true;
+    }
+
     public bool TogglePause()
     {
         this.Paused = !this.Paused;
@@ -53,11 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time > 10f)
-        {
-            skelepunCollection.SetPunlocked(1, true);
-            SaveSystem.SavePlayer(PData);
-        }
+        
     }
 
     public void Save()
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
 
     public bool Load()
     {
-        PlayerData data = SaveSystem.LoadPlayer();
+        PlayerData data = SaveSystem.LoadOrInitPlayerData(skelepunCollection.GetUnlockedPunsList());
         if (data != null)
         {
             this.PData = data;
@@ -85,12 +86,20 @@ public class GameManager : MonoBehaviour
         {
             p.unlocked = true;
             skelepunCollection.puns[selection] = p;
+            PData.ReadSkelepunCollection(skelepunCollection);
             Save();
         }
 
-        TextMeshPro tmp = Instantiate(punPrefab);
+        TextMeshPro tmp = Instantiate(punPrefab, location, Quaternion.identity);
         tmp.text = p.value;
 
         return p.value;
+    }
+
+    public void ResetPunCollection()
+    {
+        skelepunCollection.SetUnlockedPunsList(new bool[skelepunCollection.puns.Count]);
+        PData.ReadSkelepunCollection(skelepunCollection);
+        Save();
     }
 }

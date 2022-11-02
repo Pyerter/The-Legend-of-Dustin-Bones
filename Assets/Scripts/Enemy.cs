@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     protected float punGenerationChance = 0.1f;
 
     [SerializeField]
-    private PlayerController target;
+    public PlayerController target;
 
     private void Start()
     {
@@ -33,8 +33,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (GameManager.Instance.Paused)
+            return;
+
         MoveTowardsTarget();
     }
 

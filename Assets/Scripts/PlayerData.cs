@@ -17,4 +17,10 @@ public class PlayerData
             this.unlockedPuns[i] = unlockedPuns[i];
         }*/
     }
+
+    public void ReadSkelepunCollection(SkelepunCollection skelepuns)
+    {
+        bool[] unlocks = skelepuns.GetUnlockedPunsList();
+        unlockedPuns = unlocks;
+    }
 }

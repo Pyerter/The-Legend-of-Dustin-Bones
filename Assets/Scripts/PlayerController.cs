@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
 {
@@ -10,16 +13,31 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     [Header("Tweakable Parameters")]
     [SerializeField] public float speed = 1f;
     [SerializeField] public float playerAttackRange = 2f;
+    [SerializeField] public float attackCooldown = 0.75f;
+    [SerializeField] public float iSeconds = 0.2f;
+    [SerializeField] public int maxHealth = 100;
+    [SerializeField] public float shaderColorFadeLerp = 0.5f;
 
     [Header("References")]
     [SerializeField] public Animator anim;
     [SerializeField] public Transform visionCone;
     [SerializeField] public Transform visionConeMask;
     [SerializeField] public PlayerAttack playerAttack;
+    [SerializeField] public Material material;
+    [SerializeField] public Slider healthSlider;
+    [SerializeField] public TextMeshProUGUI pauseTitle;
+    [SerializeField] public Button resumeButton;
 
     [Header("Trackable Variables")]
     [SerializeField] public Vector3 movement = Vector3.zero;
     [SerializeField] public bool facingRight = true;
+    [SerializeField] public float attackAvailable = 0f;
+    [SerializeField] public float timeVulnerable = 0f;
+    [SerializeField] private int currentHealth;
+
+    // Properties
+    public int CurrentHealth { get { return currentHealth; } set { currentHealth = value; healthSlider.value = 1.0f * currentHealth / maxHealth; if (currentHealth <= 0) OnDeath(); } }
+    
 
     private void Awake()
     {
@@ -37,6 +55,21 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         {
             anim.speed = b ? 0 : 1; // if paused, set speed to 0, else normal 1
         };
+
+        CurrentHealth = maxHealth;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            if (Time.fixedTime > timeVulnerable)
+            {
+                CurrentHealth -= enemy.Damage;
+                timeVulnerable = Time.fixedTime + iSeconds;
+                material.SetFloat("_Hurt", 1);
+            }
+        }
     }
 
     private void OnEnable()
@@ -60,6 +93,7 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         SetAnimVariables();
         CheckFacing();
         OrientVision();
+        UpdateShaderVariables();
     }
 
     protected void UpdateMovement()
@@ -81,8 +115,8 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
 
             playerAttack.transform.rotation = targetRotation;
             Vector2 pos = new Vector2(Mathf.Cos(radAngle) * playerAttackRange, Mathf.Sin(radAngle) * playerAttackRange);
-            if (!facingRight)
-                pos.x *= -1;
+            //if (!facingRight)
+            //pos.x *= -1;
             playerAttack.transform.localPosition = pos;
         }
     }
@@ -123,6 +157,12 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         anim.SetFloat("Speed", movement.magnitude);
     }
 
+    protected void UpdateShaderVariables()
+    {
+        float current = material.GetFloat("_Hurt");
+        material.SetFloat("_Hurt", Mathf.Lerp(current, 0, shaderColorFadeLerp));
+    }
+
     public void OnMovement(InputAction.CallbackContext context)
     {
         Debug.Log("Doing movement");
@@ -146,14 +186,33 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     public void OnInteract(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
-        if (playerAttack != null)
+        if (context.started && Time.fixedTime > attackAvailable && playerAttack != null)
         {
-            playerAttack.gameObject.SetActive(true);
+            //playerAttack.gameObject.SetActive(true);
+            PlayerAttack pAttack = Instantiate(playerAttack, transform.position, playerAttack.transform.rotation);
+            pAttack.transform.localScale = Vector3.one;
+            pAttack.gameObject.SetActive(true);
+            attackAvailable = Time.fixedTime + attackCooldown;
+            Vector2 relativePosition = playerAttack.transform.localPosition;
+            pAttack.StartAttack(relativePosition.normalized);
         }
     }
 
     public void OnEscape(InputAction.CallbackContext context)
     {
-        GameManager.Instance.TogglePause();
+        if (CurrentHealth > 0)
+            GameManager.Instance.TogglePause();
+    }
+
+    public void OnDeath()
+    {
+        GameManager.Instance.Paused = true;
+        pauseTitle.text = "You've perished";
+        resumeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Restart";
+        resumeButton.onClick.RemoveAllListeners();
+        resumeButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene(1);
+        });
     }
 }

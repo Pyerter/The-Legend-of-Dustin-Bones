@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 494011846143806211}
   - component: {fileID: 494011846143806236}
   - component: {fileID: 494011846143806237}
+  - component: {fileID: 840829828904840995}
   m_Layer: 0
   m_Name: PunText
   m_TagString: Untagged
@@ -172,3 +173,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 494011846143806236}
   m_maskType: 0
+--- !u!114 &840829828904840995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494011846143806238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b819a8a287e1f574986e49274218a912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeDone: 0
+  duration: 2.5
+  textMesh: {fileID: 0}
+  moveSpeed: 0.05
+  shrinkSpeed: 0.5
+  growSpeed: 0.2

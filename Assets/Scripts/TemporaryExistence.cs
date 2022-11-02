@@ -25,11 +25,20 @@ public class TemporaryExistence : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.Paused)
+        {
+            timeDone += Time.fixedDeltaTime;
+        }
         if (Time.fixedTime > timeDone)
         {
             gameObject.SetActive(false);
         }
         OnUpdate();
+    }
+
+    public float GetPercentTimeLeft()
+    {
+        return (TimeDone - Time.fixedTime) / Duration;
     }
 
     public virtual void OnAppear()
