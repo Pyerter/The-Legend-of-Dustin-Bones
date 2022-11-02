@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
 
     [Header("Tweakable Parameters")]
     [SerializeField] public float speed = 1f;
+    [SerializeField] public float playerAttackRange = 2f;
 
     [Header("References")]
     [SerializeField] public Animator anim;
     [SerializeField] public Transform visionCone;
     [SerializeField] public Transform visionConeMask;
+    [SerializeField] public PlayerAttack playerAttack;
 
     [Header("Trackable Variables")]
     [SerializeField] public Vector3 movement = Vector3.zero;
@@ -71,10 +73,17 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     {
         if (movement.magnitude > 0)
         {
-            float angle = Mathf.Rad2Deg * Mathf.Atan2(movement.y, movement.x) - 90;
+            float radAngle = Mathf.Atan2(movement.y, movement.x);
+            float angle = Mathf.Rad2Deg * radAngle - 90;
             Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
             visionCone.rotation = targetRotation;
             visionConeMask.rotation = targetRotation;
+
+            playerAttack.transform.rotation = targetRotation;
+            Vector2 pos = new Vector2(Mathf.Cos(radAngle) * playerAttackRange, Mathf.Sin(radAngle) * playerAttackRange);
+            if (!facingRight)
+                pos.x *= -1;
+            playerAttack.transform.localPosition = pos;
         }
     }
 
@@ -137,6 +146,10 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     public void OnInteract(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
+        if (playerAttack != null)
+        {
+            playerAttack.gameObject.SetActive(true);
+        }
     }
 
     public void OnEscape(InputAction.CallbackContext context)

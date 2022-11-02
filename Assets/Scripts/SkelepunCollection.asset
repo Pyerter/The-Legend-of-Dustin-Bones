@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722aebe9640e12f44a52a6078f735629, type: 3}
   m_Name: SkelepunCollection
   m_EditorClassIdentifier: 
+  puns:
+  - value: Spare Ribs?
+    unlocked: 0
+  - value: No bones about it, these puns are terrible.
+    unlocked: 1

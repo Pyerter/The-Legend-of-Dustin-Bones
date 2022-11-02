@@ -47,3 +47,6 @@ TagManager:
   - name: Player
     uniqueID: 912137195
     locked: 0
+  - name: Popup Text
+    uniqueID: 719410479
+    locked: 0

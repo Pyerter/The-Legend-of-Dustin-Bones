@@ -32,6 +32,7 @@ public class SkelepunCollection : ScriptableObject
             Pair p = puns[i];
             p.unlocked = unlocks[i];
             puns[i] = p;
+            i++;
         }
         if (i != unlocks.Length)
         {
