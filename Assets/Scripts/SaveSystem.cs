@@ -37,7 +37,7 @@ public static class SaveSystem
         PlayerData data = LoadPlayer();
         if (data == null)
         {
-            data = new PlayerData(puns);
+            data = new PlayerData(new bool[puns.Length]);
         }
         return data;
     }

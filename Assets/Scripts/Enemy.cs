@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private int health = 5;
-    public int Health { get { return health; } set { health = value; if (health <= 0) Destroy(gameObject); } }
+    public int Health { get { return health; } set { health = value; if (health <= 0) KillEnemy(); } }
 
     [SerializeField]
     private int damage = 1;
@@ -56,13 +56,19 @@ public class Enemy : MonoBehaviour
         transform.position = position;
     }
 
-    private void OnDestroy()
+    public void TryGeneratePun()
     {
         if (Random.Range(0, 1f) <= punGenerationChance)
         {
             // generate pun
             GameManager.Instance.GeneratePun(transform.position);
         }
+    }
+
+    public void KillEnemy()
+    {
+        TryGeneratePun();
+        Destroy(gameObject);
     }
 
 }

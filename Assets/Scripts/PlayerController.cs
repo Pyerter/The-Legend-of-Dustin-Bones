@@ -165,7 +165,6 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
 
     public void OnMovement(InputAction.CallbackContext context)
     {
-        Debug.Log("Doing movement");
         Vector2 direction = context.ReadValue<Vector2>();
         direction.Normalize();
         
