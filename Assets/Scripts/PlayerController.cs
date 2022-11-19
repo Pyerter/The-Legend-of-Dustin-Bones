@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     [Header("Tweakable Parameters")]
     [SerializeField] public float speed = 1f;
     [SerializeField] public float playerAttackRange = 2f;
-    [SerializeField] public float attackCooldown = 0.75f;
     [SerializeField] public float iSeconds = 0.2f;
     [SerializeField] public int maxHealth = 100;
     [SerializeField] public float shaderColorFadeLerp = 0.5f;
@@ -23,7 +22,6 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     [SerializeField] public Transform visionCone;
     [SerializeField] public Transform visionConeMask;
     [SerializeField] public Transform playerLookDirector;
-    [SerializeField] public PlayerAttack playerAttack;
     [SerializeField] public Material material;
     [SerializeField] public Slider healthSlider;
     [SerializeField] public TextMeshProUGUI pauseTitle;
@@ -33,7 +31,6 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     [Header("Trackable Variables")]
     [SerializeField] public Vector3 movement = Vector3.zero;
     [SerializeField] public bool facingRight = true;
-    [SerializeField] public float attackAvailable = 0f;
     [SerializeField] public float timeVulnerable = 0f;
     [SerializeField] private int currentHealth;
 
@@ -55,6 +52,10 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         if (skillManager == null)
         {
             skillManager = GetComponentInChildren<PlayerSkillManager>();
+        }
+        if (material != null)
+        {
+            material.SetFloat("_Hurt", 0);
         }
 
         GameManager.Instance.OnPause += (s, b) =>
@@ -191,15 +192,9 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         if (!CanAct())
             return;
         //throw new System.NotImplementedException();
-        if (context.started && Time.fixedTime > attackAvailable && playerAttack != null)
+        if (context.started)
         {
-            //playerAttack.gameObject.SetActive(true);
-            PlayerAttack pAttack = Instantiate(playerAttack, transform.position, playerLookDirector.transform.rotation);
-            pAttack.transform.localScale = Vector3.one;
-            pAttack.gameObject.SetActive(true);
-            attackAvailable = Time.fixedTime + attackCooldown;
-            Vector2 relativePosition = playerLookDirector.transform.localPosition;
-            pAttack.StartAttack(relativePosition.normalized);
+            skillManager.UseSkill1(transform, playerLookDirector.transform);
         }
     }
 
