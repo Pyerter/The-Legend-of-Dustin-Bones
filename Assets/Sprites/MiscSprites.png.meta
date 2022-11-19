@@ -179,7 +179,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiscSprites_3
+      name: Button1
       rect:
         serializedVersion: 2
         x: 269
@@ -200,7 +200,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiscSprites_4
+      name: Button2
       rect:
         serializedVersion: 2
         x: 269
@@ -221,7 +221,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiscSprites_5
+      name: Button3
       rect:
         serializedVersion: 2
         x: 269
@@ -242,7 +242,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiscSprites_6
+      name: Button4
       rect:
         serializedVersion: 2
         x: 269
@@ -262,6 +262,90 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Button1Selected
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 349
+        width: 89
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50df6ab6648d52741ad6afe94dd2dfe6
+      internalID: 691067494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button2Selected
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 248
+        width: 215
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ace806cc44e6c440adb1b55489e79c4
+      internalID: -629351317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button3Selected
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 149
+        width: 309
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f19de0e4a4b07cf4f96939d89c3b7736
+      internalID: 357232411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button4Selected
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 51
+        width: 432
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67676290396d95442a0780ecac5b09bd
+      internalID: 1381299685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -273,13 +357,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MiscSprites_5: -1846704300
-      MiscSprites_6: 485007493
+      Button4: 485007493
+      Button4Selected: 1381299685
+      Button2Selected: -629351317
+      Button3Selected: 357232411
       MiscSprites_1: 1539638502
-      MiscSprites_3: -1292957830
-      MiscSprites_4: 1265398180
+      Button3: -1846704300
+      Button1: -1292957830
+      Button2: 1265398180
       MiscSprites_0: -984431780
       MiscSprites_2: -1920796096
+      Button1Selected: 691067494
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

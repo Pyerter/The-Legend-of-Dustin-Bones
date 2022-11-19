@@ -22,11 +22,13 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     [SerializeField] public Animator anim;
     [SerializeField] public Transform visionCone;
     [SerializeField] public Transform visionConeMask;
+    [SerializeField] public Transform playerLookDirector;
     [SerializeField] public PlayerAttack playerAttack;
     [SerializeField] public Material material;
     [SerializeField] public Slider healthSlider;
     [SerializeField] public TextMeshProUGUI pauseTitle;
     [SerializeField] public Button resumeButton;
+    [SerializeField] public PlayerSkillManager skillManager;
 
     [Header("Trackable Variables")]
     [SerializeField] public Vector3 movement = Vector3.zero;
@@ -49,6 +51,10 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         if (anim == null)
         {
             anim = GetComponentInChildren<Animator>();
+        }
+        if (skillManager == null)
+        {
+            skillManager = GetComponentInChildren<PlayerSkillManager>();
         }
 
         GameManager.Instance.OnPause += (s, b) =>
@@ -113,11 +119,9 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
             visionCone.rotation = targetRotation;
             visionConeMask.rotation = targetRotation;
 
-            playerAttack.transform.rotation = targetRotation;
+            playerLookDirector.transform.rotation = targetRotation;
             Vector2 pos = new Vector2(Mathf.Cos(radAngle) * playerAttackRange, Mathf.Sin(radAngle) * playerAttackRange);
-            //if (!facingRight)
-            //pos.x *= -1;
-            playerAttack.transform.localPosition = pos;
+            playerLookDirector.transform.localPosition = pos;
         }
     }
 
@@ -184,23 +188,41 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        if (!CanAct())
+            return;
         //throw new System.NotImplementedException();
         if (context.started && Time.fixedTime > attackAvailable && playerAttack != null)
         {
             //playerAttack.gameObject.SetActive(true);
-            PlayerAttack pAttack = Instantiate(playerAttack, transform.position, playerAttack.transform.rotation);
+            PlayerAttack pAttack = Instantiate(playerAttack, transform.position, playerLookDirector.transform.rotation);
             pAttack.transform.localScale = Vector3.one;
             pAttack.gameObject.SetActive(true);
             attackAvailable = Time.fixedTime + attackCooldown;
-            Vector2 relativePosition = playerAttack.transform.localPosition;
+            Vector2 relativePosition = playerLookDirector.transform.localPosition;
             pAttack.StartAttack(relativePosition.normalized);
         }
+    }
+
+    public void OnAbility2(InputAction.CallbackContext context)
+    {
+        if (!CanAct())
+            return;
+    }
+
+    public void OnAbility3(InputAction.CallbackContext context)
+    {
+        if (!CanAct())
+            return;
     }
 
     public void OnEscape(InputAction.CallbackContext context)
     {
         if (CurrentHealth > 0)
             GameManager.Instance.TogglePause();
+    }
+
+    public void OnInventory(InputAction.CallbackContext context)
+    {
     }
 
     public void OnDeath()
@@ -213,5 +235,10 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         {
             SceneManager.LoadScene(1);
         });
+    }
+
+    public bool CanAct()
+    {
+        return !GameManager.Instance.Paused;
     }
 }
