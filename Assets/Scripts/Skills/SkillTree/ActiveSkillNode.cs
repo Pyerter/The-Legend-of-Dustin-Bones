@@ -21,6 +21,8 @@ public class ActiveSkillNode : SkillNode
 
     public override ActiveSkill GetActiveSkill()
     {
-        return activeSkill.GetCopy();
+        ActiveSkill skill = activeSkill.GetCopy();
+        skill.SkillRank = RanksUnlocked;
+        return skill;
     }
 }

@@ -222,8 +222,11 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     {
         if (context.started && CurrentHealth > 0)
         {
+            bool repause = !GameManager.Instance.PauseMenuToggled && GameManager.Instance.Paused;
             GameManager.Instance.PauseMenuToggled = true;
             GameManager.Instance.TogglePause();
+            if (repause)
+                GameManager.Instance.TogglePause();
         }
     }
 
@@ -231,8 +234,11 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     {
         if (context.started && CurrentHealth > 0)
         {
+            bool repause = GameManager.Instance.PauseMenuToggled && GameManager.Instance.Paused;
             GameManager.Instance.PauseMenuToggled = false;
             GameManager.Instance.TogglePause();
+            if (repause)
+                GameManager.Instance.TogglePause();
         }
     }
 

@@ -31,8 +31,8 @@ public class ActiveSkillNodeSelector : MonoBehaviour
 
     public void BeginActiveSkillSelection()
     {
+        text.text = "...";
         inventoryManager.BeginActiveSkillSelection(this);
-        text.text = "Selecting...";
     }
 
     public void SetActiveSkill(ActiveSkill skill)

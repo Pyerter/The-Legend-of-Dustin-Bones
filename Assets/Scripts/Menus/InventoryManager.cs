@@ -19,7 +19,8 @@ public class InventoryManager : MonoBehaviour
         get { return skillPointsUsed; } 
         set { 
             skillPointsUsed = value; 
-            pointsLeftInidicator.text = "Skill Points Left:\n" + GetSkillPointsLeft().ToString() + "/" + skillPointsEarned.ToString(); 
+            if (pointsLeftInidicator != null)
+                pointsLeftInidicator.text = "Skill Points Left:\n" + GetSkillPointsLeft().ToString() + "/" + skillPointsEarned.ToString();
         } 
     }
     [SerializeField] public int skillPointsPerMastery = 3;
@@ -33,6 +34,8 @@ public class InventoryManager : MonoBehaviour
         {
             player = FindObjectOfType<PlayerController>();
         }
+
+        SkillPointsUsed = 0;
     }
 
     public int GetSkillPointsLeft()
@@ -210,9 +213,9 @@ public class InventoryManager : MonoBehaviour
     public void UnlearnAllNodes()
     {
         SkillPointsUsed = 0;
-        activeSkillSelector1.activeSkill = null;
-        activeSkillSelector2.activeSkill = null;
-        activeSkillSelector3.activeSkill = null;
+        activeSkillSelector1.SetActiveSkill(null);
+        activeSkillSelector2.SetActiveSkill(null);
+        activeSkillSelector3.SetActiveSkill(null);
         for (int i = unlockedSkills.Count - 1; i >= 0; i--)
         {
             unlockedSkills[i].RanksUnlocked = 0;
