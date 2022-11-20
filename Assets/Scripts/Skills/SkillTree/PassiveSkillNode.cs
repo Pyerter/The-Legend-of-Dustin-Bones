@@ -21,6 +21,6 @@ public class PassiveSkillNode : SkillNode
 
     public override PassiveSkill GetPassiveSkill()
     {
-        return passiveSkill;
+        return passiveSkill.GetCopy();
     }
 }

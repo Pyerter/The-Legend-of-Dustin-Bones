@@ -13,11 +13,17 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] public GameObject pauseMenuFirstSelection;
     [SerializeField] public GameObject inventoryFirstSelection;
 
+    [SerializeField] public InventoryManager inventoryManager;
+
     private void Awake()
     {
         if (eventSystem == null)
         {
             eventSystem = FindObjectOfType<EventSystem>();
+        }
+        if (inventoryManager == null)
+        {
+            inventoryManager = GetComponent<InventoryManager>();
         }
 
         GameManager.Instance.OnPause += (s, b) =>
@@ -33,11 +39,13 @@ public class PauseMenuController : MonoBehaviour
         {
             pauseItems.SetActive(false);
             inventoryItems.SetActive(false);
+            UpdateInventory();
         } else
         {
             if (GameManager.Instance.PauseMenuToggled)
             {
                 inventoryItems.SetActive(false);
+                UpdateInventory();
                 pauseItems.SetActive(true);
                 eventSystem.SetSelectedGameObject(pauseMenuFirstSelection);
             } else
@@ -47,6 +55,11 @@ public class PauseMenuController : MonoBehaviour
                 eventSystem.SetSelectedGameObject(inventoryFirstSelection);
             }
         }
+    }
+
+    public void UpdateInventory()
+    {
+        inventoryManager.ApplySkillSelections();
     }
 
     public void GoToMainMenu()

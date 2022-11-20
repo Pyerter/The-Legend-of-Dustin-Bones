@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public abstract class SkillNode : MonoBehaviour
 {
     [SerializeField] public InventoryManager inventoryManager;
+    [SerializeField] public TextMeshProUGUI text;
 
     [SerializeField] public List<SkillNode> prerequisites = new List<SkillNode>();
     [SerializeField] public List<SkillNode> unlockers = new List<SkillNode>();
 
-    [SerializeField] public int ranksUnlocked = 0;
+    [SerializeField] protected int ranksUnlocked = 0;
+    [SerializeField] public int RanksUnlocked { get { return ranksUnlocked; } set { if (value <= 5 && value >= 0) { ranksUnlocked = value; if (text != null) text.text = ranksUnlocked.ToString(); } } }
 
     private void Awake()
     {

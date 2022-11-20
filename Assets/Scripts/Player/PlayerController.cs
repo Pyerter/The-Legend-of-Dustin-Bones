@@ -202,12 +202,20 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     {
         if (!CanAct())
             return;
+        if (context.started)
+        {
+            skillManager.UseSkill2(transform, playerLookDirector.transform);
+        }
     }
 
     public void OnAbility3(InputAction.CallbackContext context)
     {
         if (!CanAct())
             return;
+        if (context.started)
+        {
+            skillManager.UseSkill3(transform, playerLookDirector.transform);
+        }
     }
 
     public void OnEscape(InputAction.CallbackContext context)
@@ -230,6 +238,7 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
 
     public void OnDeath()
     {
+        GameManager.Instance.PauseMenuToggled = true;
         GameManager.Instance.Paused = true;
         pauseTitle.text = "You've perished";
         resumeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Restart";

@@ -7,6 +7,7 @@ public abstract class PlayerSkill<S> : ScriptableObject where S : PlayerSkill<S>
     protected bool original = true;
 
     [Header("Tweakable Variables")]
+    [SerializeField] public string displayName = "Cool Skill";
     [SerializeField] public float skillCooldown = 0.1f;
     [SerializeField] public int maxRank = 5;
 

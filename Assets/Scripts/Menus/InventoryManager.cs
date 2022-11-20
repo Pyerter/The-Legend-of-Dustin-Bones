@@ -1,15 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
+    [SerializeField] PlayerController player;
+    [SerializeField] TextMeshProUGUI pointsLeftInidicator;
+
     [SerializeField] public List<SkillNode> unlockedSkills = new List<SkillNode>();
+    [SerializeField] public ActiveSkillNodeSelector activeSkillSelector1;
+    [SerializeField] public ActiveSkillNodeSelector activeSkillSelector2;
+    [SerializeField] public ActiveSkillNodeSelector activeSkillSelector3;
 
     [SerializeField] public int skillPointsEarned = 3;
     [SerializeField] public int skillPointsUsed = 0;
+    public int SkillPointsUsed { 
+        get { return skillPointsUsed; } 
+        set { 
+            skillPointsUsed = value; 
+            pointsLeftInidicator.text = "Skill Points Left:\n" + GetSkillPointsLeft().ToString() + "/" + skillPointsEarned.ToString(); 
+        } 
+    }
     [SerializeField] public int skillPointsPerMastery = 3;
     [SerializeField] public int skillPointsPerUnlock = 3;
+
+    [SerializeField] private ActiveSkillNodeSelector selectingActiveSkill = null;
+
+    private void Awake()
+    {
+        if (player == null)
+        {
+            player = FindObjectOfType<PlayerController>();
+        }
+    }
 
     public int GetSkillPointsLeft()
     {
@@ -96,19 +120,19 @@ public class InventoryManager : MonoBehaviour
     public bool CanSkillNode(SkillNode node, out int pointsUsed)
     {
         pointsUsed = 0;
-        if (node.ranksUnlocked == 4)
+        if (node.RanksUnlocked == 4)
         {
             pointsUsed = skillPointsPerMastery;
             return GetSkillPointsLeft() >= skillPointsPerMastery;
         }
 
-        if (node.ranksUnlocked > 0)
+        if (node.RanksUnlocked > 0)
         {
             pointsUsed = 1;
             return GetSkillPointsLeft() > 0;
         }
 
-        if (node.ranksUnlocked == 0)
+        if (node.RanksUnlocked == 0)
         {
             pointsUsed = skillPointsPerUnlock;
             return GetSkillPointsLeft() >= skillPointsPerUnlock && NodeIsUnlocked(node);
@@ -119,14 +143,27 @@ public class InventoryManager : MonoBehaviour
 
     public bool TrySkillNode(SkillNode node)
     {
+        if (selectingActiveSkill != null)
+        {
+            if (node.RanksUnlocked > 0 && node.TryGetActiveSkill(out ActiveSkill active))
+            {
+                SetActiveSkillSelection(selectingActiveSkill, active);
+                selectingActiveSkill = null;
+                return true;
+            }
+            selectingActiveSkill.SetActiveSkill(null);
+            selectingActiveSkill = null;
+            return false;
+        }
+
         if (CanSkillNode(node, out int pointsRequired))
         {
-            if (node.ranksUnlocked == 0)
+            if (node.RanksUnlocked == 0)
             {
                 unlockedSkills.Add(node);
             }
-            node.ranksUnlocked += 1;
-            skillPointsUsed += pointsRequired;
+            node.RanksUnlocked += 1;
+            SkillPointsUsed += pointsRequired;
             return true;
         }
         return false;
@@ -135,19 +172,19 @@ public class InventoryManager : MonoBehaviour
     public bool CanUnskillNode(SkillNode node, out int pointsGained)
     {
         pointsGained = 0;
-        if (node.ranksUnlocked == 5)
+        if (node.RanksUnlocked == 5)
         {
             pointsGained = skillPointsPerMastery;
             return true;
         }
 
-        if (node.ranksUnlocked > 1)
+        if (node.RanksUnlocked > 1)
         {
             pointsGained = 1;
             return true;
         }
 
-        if (node.ranksUnlocked == 1)
+        if (node.RanksUnlocked == 1)
         {
             pointsGained = skillPointsPerUnlock;
             return true;
@@ -160,13 +197,88 @@ public class InventoryManager : MonoBehaviour
     {
         if (CanUnskillNode(node, out int pointsGained))
         {
-            node.ranksUnlocked--;
-            if (node.ranksUnlocked == 0)
+            node.RanksUnlocked--;
+            if (node.RanksUnlocked == 0)
                 unlockedSkills.Remove(node);
 
-            skillPointsUsed -= pointsGained;
+            SkillPointsUsed -= pointsGained;
             return true;
         }
         return false;
+    }
+
+    public void UnlearnAllNodes()
+    {
+        SkillPointsUsed = 0;
+        activeSkillSelector1.activeSkill = null;
+        activeSkillSelector2.activeSkill = null;
+        activeSkillSelector3.activeSkill = null;
+        for (int i = unlockedSkills.Count - 1; i >= 0; i--)
+        {
+            unlockedSkills[i].RanksUnlocked = 0;
+            unlockedSkills.RemoveAt(i);
+        }
+    }
+
+    public void BeginActiveSkillSelection(ActiveSkillNodeSelector selector)
+    {
+        if (selectingActiveSkill != null && selectingActiveSkill == selector)
+        {
+            // unselect a skill!
+            selectingActiveSkill.SetActiveSkill(null);
+            selectingActiveSkill = null;
+        }
+        else if (selectingActiveSkill != null)
+        {
+            // flip the skills!
+            ActiveSkill temp = selector.activeSkill;
+            selector.SetActiveSkill(selectingActiveSkill.activeSkill);
+            selectingActiveSkill.SetActiveSkill(temp);
+            selectingActiveSkill = null;
+        }
+        else
+            selectingActiveSkill = selector;
+    }
+
+    public void SetActiveSkillSelection(ActiveSkillNodeSelector selector, ActiveSkill skill)
+    {
+        if (selector != activeSkillSelector1)
+        {
+            if (activeSkillSelector1.activeSkill != null && activeSkillSelector1.activeSkill.name.Equals(skill.name))
+            {
+                activeSkillSelector1.SetActiveSkill(null);
+                selector.SetActiveSkill(skill);
+                return;
+            }
+        }
+
+        if (selector != activeSkillSelector2)
+        {
+            if (activeSkillSelector2.activeSkill != null && activeSkillSelector2.activeSkill.name.Equals(skill.name))
+            {
+                activeSkillSelector2.SetActiveSkill(null);
+                selector.SetActiveSkill(skill);
+                return;
+            }
+        }
+
+        if (selector != activeSkillSelector3)
+        {
+            if (activeSkillSelector3.activeSkill != null && activeSkillSelector3.activeSkill.name.Equals(skill.name))
+            {
+                activeSkillSelector3.SetActiveSkill(null);
+                selector.SetActiveSkill(skill);
+                return;
+            }
+        }
+
+        selector.SetActiveSkill(skill);
+    }
+
+    public void ApplySkillSelections()
+    {
+        player.skillManager.skill1 = activeSkillSelector1.activeSkill;
+        player.skillManager.skill2 = activeSkillSelector2.activeSkill;
+        player.skillManager.skill3 = activeSkillSelector3.activeSkill;
     }
 }
