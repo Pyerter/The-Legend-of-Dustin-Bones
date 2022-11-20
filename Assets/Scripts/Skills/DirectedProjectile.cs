@@ -10,10 +10,8 @@ public class DirectedProjectile : ActiveSkill
         GameObject obj = Instantiate(skillPrefab, stationaryTransform.position, launchTransform.rotation);
         if (obj.TryGetComponent<PlayerAttack>(out PlayerAttack pAttack))
         {
-            pAttack.transform.localScale = Vector3.one;
-            pAttack.gameObject.SetActive(true);
-            Vector2 relativePosition = launchTransform.transform.localPosition;
-            pAttack.StartAttack(relativePosition.normalized);
+            obj.gameObject.SetActive(true);
+            pAttack.InitializeAttack(this, stationaryTransform, launchTransform, powerStats);
             return true;
         } else
         {

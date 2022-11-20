@@ -2,38 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : TemporaryExistence
+public abstract class PlayerAttack : TemporaryExistence
 {
-    [SerializeField]
-    protected int damage = 5;
-    public int Damage { get { return damage; } private set { damage = value; } }
+    [SerializeField] public float AttackValue { get; private set; }
 
-    [SerializeField]
-    protected float spinSpeed = 0.5f;
-    [SerializeField]
-    protected float moveSpeed = 5f;
-    public bool spinning = false;
-    protected Vector3 flyingDirection = Vector2.zero;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void InitializeAttack(ActiveSkill skill, Transform stationaryTransform, Transform launchTransform, PowerStats powerStats)
     {
-        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
-        {
-            enemy.Health -= damage;
-        }
+        AttackValue = skill.valueByRank[skill.SkillRank] * powerStats.Value;
+        OnInitializeAttack(skill, stationaryTransform, launchTransform, powerStats);
     }
 
-    public override void OnUpdate()
-    {
-        base.OnUpdate();
-        if (spinning)
-        {
-            transform.Rotate(Vector3.forward, spinSpeed * Time.fixedDeltaTime);
-            Vector3 position = transform.position;
-            position += flyingDirection * Time.fixedDeltaTime * moveSpeed;
-            transform.position = position;
-        }
-    }
+    public abstract void OnInitializeAttack(ActiveSkill skill, Transform stationaryTransform, Transform launchTransform, PowerStats powerStats);
 
     public override void OnDisappear()
     {
@@ -41,9 +20,19 @@ public class PlayerAttack : TemporaryExistence
         Destroy(gameObject);
     }
 
-    public void StartAttack(Vector2 direction)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        spinning = true;
-        flyingDirection = direction;
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            if (OnEnemyEnterTrigger(enemy))
+            {
+                OnHitEnemy(enemy);
+            }
+        }
     }
+    public virtual bool OnEnemyEnterTrigger(Enemy enemy) { return false; }
+
+    public virtual void OnTick() { }
+    public virtual void OnHitEnemy(Enemy enemy) { }
+    public virtual void OnHitSelf(PlayerController player) { }
 }

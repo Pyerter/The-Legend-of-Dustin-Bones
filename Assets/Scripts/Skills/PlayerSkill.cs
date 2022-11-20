@@ -10,6 +10,7 @@ public abstract class PlayerSkill<S> : ScriptableObject where S : PlayerSkill<S>
     [SerializeField] public string displayName = "Cool Skill";
     [SerializeField] public float skillCooldown = 0.1f;
     [SerializeField] public int maxRank = 5;
+    [SerializeField] public float[] valueByRank = new float[5];
 
     [Header("References")]
     [SerializeField] public GameObject skillPrefab;
