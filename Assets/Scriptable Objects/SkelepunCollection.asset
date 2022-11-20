@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722aebe9640e12f44a52a6078f735629, type: 3}
+  m_Name: SkelepunCollection
+  m_EditorClassIdentifier: 
+  puns:
+  - value: Spare Ribs?
+    unlocked: 1
+  - value: No bones about it, these puns are terrible.
+    unlocked: 1
+  - value: I've got a bone to pick with you.
+    unlocked: 1
+  - value: It's a shame you've got no body to dance with.
+    unlocked: 1
+  - value: These puns are bone dry, and I apologize.
+    unlocked: 1
+  - value: I have a tendon-cy to say bones pones.
+    unlocked: 1
+  - value: Quite the backbone you've got there!
+    unlocked: 1
+  - value: Will these puns get under your skin?
+    unlocked: 1
+  - value: You're as flimsy as a bag of bones.
+    unlocked: 1
+  - value: You've got no meat on your bones, here's a knuckle sandwich!
+    unlocked: 1
+  - value: Sink your teeth into this knuckle sandwich!
+    unlocked: 1
+  - value: Got milk?
+    unlocked: 1
+  - value: Roll the bones!
+    unlocked: 1
+  - value: Stop skull-king around.
+    unlocked: 1
+  - value: Did you just throw me a bone?
+    unlocked: 1
+  - value: '''Tis but a flesh wound!'
+    unlocked: 1
+  - value: Bones aren't all they're cracked up to be.
+    unlocked: 1
+  - value: These puns are quite... humerus.
+    unlocked: 1
+  - value: WECOME TO THE BONE ZONE!!!
+    unlocked: 1
+  - value: You don't have the guts.
+    unlocked: 1
+  - value: Them bones weight a skeleTON!
+    unlocked: 1
+  - value: That bone missed my a marrow margin.
+    unlocked: 1
+  - value: Bone-jour!
+    unlocked: 1
+  - value: Bone-voyage!
+    unlocked: 1
+  - value: Bone-appetit!
+    unlocked: 1
+  - value: What, are you doing this pro-bone-o?
+    unlocked: 1
+  - value: You are a truly bone-afide undead.
+    unlocked: 1
+  - value: All we've got here is a skeleton crew.
+    unlocked: 1
+  - value: What a grave situation this is.
+    unlocked: 1
+  - value: Can you match the tone of the bone throne?
+    unlocked: 1
+  - value: Come to atone for the sins of your bones!
+    unlocked: 1
+  - value: I cannot fib, you've tickled my ribs.
+    unlocked: 1
+  - value: I won't be fibbing, get ready for a ribbing!
+    unlocked: 1
+  - value: I'll fight you if I must, but when I'm done, you'll be dust.
+    unlocked: 1
+  - value: If you don't have the spine, your spare ribs will be mine!
+    unlocked: 1
+  - value: I used tibia an adventurer like you, but I lost the stomach for it.
+    unlocked: 1
+  - value: You look rattled.
+    unlocked: 1
+  - value: What do you call a skeleton wizard? A spelleton!
+    unlocked: 1
+  - value: What's a skeleton's favorite instrument? The trombone!
+    unlocked: 1
+  - value: Why did the skeleton want a friend? It was bonely.
+    unlocked: 1
+  - value: What's a skeleton's favorite weapon? A bone and marrow.
+    unlocked: 1
+  - value: What kind of phones do skeletons use? Flip-bones.
+    unlocked: 1
+  - value: '*Xylophone sounds*'
+    unlocked: 1
+  - value: Spooky scary skeletons send shivers down your spine!
+    unlocked: 1
+  - value: What a sharp jawline you have!
+    unlocked: 1
+  - value: Such prominent cheekbones!
+    unlocked: 1
+  - value: Why don't skeletons like spicy food? It goes right through them!
+    unlocked: 1
+  - value: Skeletons lack guts, they always bone it in.
+    unlocked: 1
+  - value: What a numbskull.
+    unlocked: 1
+  - value: I bet you've got skeletons in your closet.
+    unlocked: 1
+  - value: Need a hand?
+    unlocked: 1
+  - value: Can you feel it in your bones?
+    unlocked: 1
+  - value: Sticks and stones can't break these bones!
+    unlocked: 1
+  - value: Those are some bare-bone ribs.
+    unlocked: 1
+  - value: Skeletons are terrible liars, you can see right through them.
+    unlocked: 1
+  - value: Tibia honest, trom-bones tickle my ribs.
+    unlocked: 1
+  - value: Have you seen my skullpture around here?
+    unlocked: 1
+  - value: Boned to be wild!
+    unlocked: 1
+  - value: Will you marrow me?
+    unlocked: 1
+  - value: You're working down to the bone.
+    unlocked: 1
+  - value: Turns out the shin-dig wasn't a dance, but we found lots of fossils.
+    unlocked: 1
+  - value: I lost my wrist in the boneyard, could you lend me a hand?
+    unlocked: 1
+  - value: Well that's no skin off my back!
+    unlocked: 1
+  - value: Missed me by the skin of my teeth!
+    unlocked: 1
+  - value: Dustin Bones will be nothing but dust and bones.
+    unlocked: 1
+  - value: Better luck to-marrow.
+    unlocked: 1

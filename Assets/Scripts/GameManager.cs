@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [SerializeField] private bool pauseMenuToggled = true;
+    public bool PauseMenuToggled { get { return pauseMenuToggled; } set { pauseMenuToggled = value; } }
+
     public delegate void BoolGameManagerEvent(GameManager sender, bool b);
     public event BoolGameManagerEvent OnPause;
 

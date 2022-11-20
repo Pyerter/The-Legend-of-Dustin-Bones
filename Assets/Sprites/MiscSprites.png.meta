@@ -267,7 +267,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 728
-        y: 349
+        y: 350
         width: 89
         height: 88
       alignment: 0
@@ -346,6 +346,111 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: PassiveSkillNode
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 550
+        width: 84
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad9676c638e93e4e95ec6bdc3f4d320
+      internalID: -1277669404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PassiveSkillNodeSelected
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 550
+        width: 84
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fdc3b712e5afb14382c2a684f4a552e
+      internalID: 1491580516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CutDiamond
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 559
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e43c677819db7148bf6ed2ef41760a4
+      internalID: 266625782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ActiveSkillNode
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 458
+        width: 89
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 881f842dee413e546950f49b56df04e7
+      internalID: -105338211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ActiveSkillNodeSelected
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 458
+        width: 89
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6a176e1b42449143876a13a1f65824c
+      internalID: 2046108570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -358,15 +463,20 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Button4: 485007493
+      CutDiamond: 266625782
       Button4Selected: 1381299685
       Button2Selected: -629351317
       Button3Selected: 357232411
       MiscSprites_1: 1539638502
       Button3: -1846704300
+      ActiveSkillNode: -105338211
       Button1: -1292957830
+      ActiveSkillNodeSelected: 2046108570
       Button2: 1265398180
       MiscSprites_0: -984431780
       MiscSprites_2: -1920796096
+      PassiveSkillNodeSelected: 1491580516
+      PassiveSkillNode: -1277669404
       Button1Selected: 691067494
   spritePackingTag: 
   pSDRemoveMatte: 0
