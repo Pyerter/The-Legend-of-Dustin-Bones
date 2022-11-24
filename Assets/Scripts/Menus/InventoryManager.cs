@@ -283,5 +283,6 @@ public class InventoryManager : MonoBehaviour
         player.skillManager.skill1 = activeSkillSelector1.activeSkill;
         player.skillManager.skill2 = activeSkillSelector2.activeSkill;
         player.skillManager.skill3 = activeSkillSelector3.activeSkill;
+        player.skillManager.UpdateSkillAssignments();
     }
 }

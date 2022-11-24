@@ -38,6 +38,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Hurt: 0.0000000027755491
+    - _Hurt: 7.055073e-10
     m_Colors: []
   m_BuildTextureStacks: []

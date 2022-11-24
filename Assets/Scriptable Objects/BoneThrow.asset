@@ -24,3 +24,4 @@ MonoBehaviour:
   skillPrefab: {fileID: 5217920517560967437, guid: a40d20b376f7f4f46adcbdd672384726, type: 3}
   skillRank: 1
   skillAvailable: 0
+  skillSprite: {fileID: 2050001065, guid: 4a5cba4ebad424f498b23da2249afbf4, type: 3}

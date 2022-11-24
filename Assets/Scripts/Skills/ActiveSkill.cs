@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //[CreateAssetMenu(fileName = "activeSkill", menuName = "Skills/Active Skill", order = 1)]
 public abstract class ActiveSkill : PlayerSkill<ActiveSkill>
 {
+    [Header("Active Skill References")]
+    [SerializeField] public Sprite skillSprite;
+
     public bool UseSkill(Transform stationaryTransform, Transform launchTransform, PowerStats powerStats)
     {
         if (original)
@@ -26,4 +30,10 @@ public abstract class ActiveSkill : PlayerSkill<ActiveSkill>
     }
 
     public abstract bool TriggerSkill(Transform stationaryTransform, Transform launchTransform, PowerStats powerStats);
+    public abstract void AlignSkillImage(Image image);
+
+    public void UpdateSkillImageFill(HudSkillIndicator indicator)
+    {
+        indicator.SetAbilityFill(skillAvailable, skillCooldown);
+    }
 }

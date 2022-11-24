@@ -14,6 +14,10 @@ public class PlayerSkillManager : MonoBehaviour
     [SerializeField] public ActiveSkill skill2;
     [SerializeField] public ActiveSkill skill3;
 
+    [SerializeField] public HudSkillIndicator skill1HudIndicator;
+    [SerializeField] public HudSkillIndicator skill2HudIndicator;
+    [SerializeField] public HudSkillIndicator skill3HudIndicator;
+
     [SerializeField] public List<PassiveSkill> passiveSkills = new List<PassiveSkill>();
 
     public delegate void OnHitEvent(PlayerController player, Enemy enemy);
@@ -49,6 +53,11 @@ public class PlayerSkillManager : MonoBehaviour
             skill3?.DelaySkillAvailable();
             foreach (PassiveSkill skill in passiveSkills)
                 skill.DelaySkillAvailable();
+        } else
+        {
+            skill1?.UpdateSkillImageFill(skill1HudIndicator);
+            skill2?.UpdateSkillImageFill(skill2HudIndicator);
+            skill3?.UpdateSkillImageFill(skill3HudIndicator);
         }
     }
 
@@ -99,8 +108,42 @@ public class PlayerSkillManager : MonoBehaviour
         return false;
     }
 
+    public void UpdateSkillAssignments()
+    {
+        if (skill1 != null)
+        {
+            skill1HudIndicator.gameObject.SetActive(true);
+            skill1.AlignSkillImage(skill1HudIndicator.abilityImage);
+        } else
+        {
+            skill1HudIndicator.gameObject.SetActive(false);
+        }
+
+        if (skill2 != null)
+        {
+            skill2HudIndicator.gameObject.SetActive(true);
+            skill2.AlignSkillImage(skill2HudIndicator.abilityImage);
+        }
+        else
+        {
+            skill2HudIndicator.gameObject.SetActive(false);
+        }
+
+        if (skill3 != null)
+        {
+            skill3HudIndicator.gameObject.SetActive(true);
+            skill3.AlignSkillImage(skill3HudIndicator.abilityImage);
+        }
+        else
+        {
+            skill3HudIndicator.gameObject.SetActive(false);
+        }
+    }
+
     public void CallOnHit(Enemy enemy)
     {
         OnHit?.Invoke(player, enemy);
     }
+
+    
 }
