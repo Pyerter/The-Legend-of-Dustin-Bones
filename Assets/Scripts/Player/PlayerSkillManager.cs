@@ -19,6 +19,7 @@ public class PlayerSkillManager : MonoBehaviour
     [SerializeField] public HudSkillIndicator skill3HudIndicator;
 
     [SerializeField] public List<PassiveSkill> passiveSkills = new List<PassiveSkill>();
+    [SerializeField] public List<PassiveSkill> pendingPassiveSkills = new List<PassiveSkill>();
 
     public delegate void OnHitEvent(PlayerController player, Enemy enemy);
     public event OnHitEvent OnHit;
@@ -104,17 +105,27 @@ public class PlayerSkillManager : MonoBehaviour
             }
             passiveSkills.Remove(passive);
             return true;
+        } else
+        {
+            Debug.LogError("Failed to unsubscribe passive skill: " + passive.name);
         }
         return false;
     }
 
     public void UpdateSkillAssignments()
     {
+        UpdateActiveSkillAssignments();
+        UpdatePassiveSkillAssignments();
+    }
+
+    public void UpdateActiveSkillAssignments()
+    {
         if (skill1 != null)
         {
             skill1HudIndicator.gameObject.SetActive(true);
             skill1.AlignSkillImage(skill1HudIndicator.abilityImage);
-        } else
+        }
+        else
         {
             skill1HudIndicator.gameObject.SetActive(false);
         }
@@ -138,6 +149,36 @@ public class PlayerSkillManager : MonoBehaviour
         {
             skill3HudIndicator.gameObject.SetActive(false);
         }
+    }
+
+    public void UpdatePassiveSkillAssignments()
+    {
+        for (int i = passiveSkills.Count - 1; i >= 0; i--)
+        {
+            PassiveSkill currentSkill = passiveSkills[i];
+            PassiveSkill newSkill = null;
+            foreach (PassiveSkill pendingSkill in pendingPassiveSkills)
+            {
+                if (pendingSkill.name.Equals(currentSkill.name))
+                {
+                    newSkill = pendingSkill;
+                    break;
+                }
+            }
+            if (newSkill != null && currentSkill.skillRank == newSkill.skillRank)
+            {
+                pendingPassiveSkills.Remove(newSkill);
+            }
+            else
+            {
+                RemovePassive(currentSkill);
+            }
+        }
+        foreach (PassiveSkill skill in pendingPassiveSkills)
+        {
+            ApplyPassive(skill);
+        }
+        pendingPassiveSkills.Clear();
     }
 
     public void CallOnHit(Enemy enemy)

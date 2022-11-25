@@ -68,7 +68,7 @@ public class InventoryManager : MonoBehaviour
         return activeSkills;
     }
 
-    public List<PassiveSkill> GetPassiveSkills()
+    public List<PassiveSkill> GetAllPassiveSkills()
     {
         List<PassiveSkill> passiveSkills = new List<PassiveSkill>();
         foreach (SkillNode node in unlockedSkills)
@@ -283,6 +283,7 @@ public class InventoryManager : MonoBehaviour
         player.skillManager.skill1 = activeSkillSelector1.activeSkill;
         player.skillManager.skill2 = activeSkillSelector2.activeSkill;
         player.skillManager.skill3 = activeSkillSelector3.activeSkill;
+        player.skillManager.pendingPassiveSkills = GetAllPassiveSkills();
         player.skillManager.UpdateSkillAssignments();
     }
 }

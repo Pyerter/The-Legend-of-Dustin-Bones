@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     [SerializeField] public float iSeconds = 0.2f;
     [SerializeField] public int maxHealth = 100;
     [SerializeField] public float shaderColorFadeLerp = 0.5f;
+    [SerializeField] public float skillAutoFireThreshold = 0.5f;
 
     [Header("References")]
     [SerializeField] public Animator anim;
@@ -33,6 +34,9 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
     [SerializeField] public bool facingRight = true;
     [SerializeField] public float timeVulnerable = 0f;
     [SerializeField] private int currentHealth;
+    [SerializeField] private float skill1AutoFire = 0f;
+    [SerializeField] private float skill2AutoFire = 0f;
+    [SerializeField] private float skill3AutoFire = 0f;
 
     // Properties
     public int CurrentHealth { get { return currentHealth; } set { currentHealth = value; healthSlider.value = 1.0f * currentHealth / maxHealth; if (currentHealth <= 0) OnDeath(); } }
@@ -101,6 +105,7 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         CheckFacing();
         OrientVision();
         UpdateShaderVariables();
+        UpdateActiveSkillInputs();
     }
 
     protected void UpdateMovement()
@@ -168,6 +173,16 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         material.SetFloat("_Hurt", Mathf.Lerp(current, 0, shaderColorFadeLerp));
     }
 
+    public void UpdateActiveSkillInputs()
+    {
+        if (skill1AutoFire != 0f && Time.fixedTime > skill1AutoFire)
+            skillManager.UseSkill1(transform, playerLookDirector.transform);
+        if (skill2AutoFire != 0f && Time.fixedTime > skill2AutoFire)
+            skillManager.UseSkill2(transform, playerLookDirector.transform);
+        if (skill3AutoFire != 0f && Time.fixedTime > skill3AutoFire)
+            skillManager.UseSkill3(transform, playerLookDirector.transform);
+    }
+
     public void OnMovement(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>();
@@ -195,6 +210,15 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         if (context.started)
         {
             skillManager.UseSkill1(transform, playerLookDirector.transform);
+            skill1AutoFire = Time.fixedTime + skillAutoFireThreshold;
+        }
+        if (context.performed && Time.fixedTime >= skill1AutoFire)
+        {
+            skillManager.UseSkill1(transform, playerLookDirector.transform);
+        }
+        if (context.canceled)
+        {
+            skill1AutoFire = 0f;
         }
     }
 
@@ -205,6 +229,15 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         if (context.started)
         {
             skillManager.UseSkill2(transform, playerLookDirector.transform);
+            skill2AutoFire = Time.fixedTime + skillAutoFireThreshold;
+        }
+        if (context.performed && Time.fixedTime >= skill2AutoFire)
+        {
+            skillManager.UseSkill2(transform, playerLookDirector.transform);
+        }
+        if (context.canceled)
+        {
+            skill2AutoFire = 0f;
         }
     }
 
@@ -215,6 +248,15 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
         if (context.started)
         {
             skillManager.UseSkill3(transform, playerLookDirector.transform);
+            skill3AutoFire = Time.fixedTime + skillAutoFireThreshold;
+        }
+        if (context.performed && Time.fixedTime >= skill3AutoFire)
+        {
+            skillManager.UseSkill3(transform, playerLookDirector.transform);
+        }
+        if (context.canceled)
+        {
+            skill3AutoFire = 0f;
         }
     }
 

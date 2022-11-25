@@ -17,6 +17,7 @@ public abstract class PassiveSkill : PlayerSkill<PassiveSkill>
         if (!isSubscribed)
         {
             SubscribePassive(skillManager);
+            isSubscribed = true;
             return true;
         }
         return false;
@@ -27,6 +28,7 @@ public abstract class PassiveSkill : PlayerSkill<PassiveSkill>
         if (isSubscribed)
         {
             UnsubscribePassive(skillManager);
+            isSubscribed = false;
             return true;
         }
         return false;

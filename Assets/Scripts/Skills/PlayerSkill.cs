@@ -17,6 +17,8 @@ public abstract class PlayerSkill<S> : ScriptableObject where S : PlayerSkill<S>
 
     [Header("Trackable Variables")]
     [SerializeField] public int skillRank = 1;
+    [SerializeField] public int SkillRankIndex { get { return skillRank > 0 ? skillRank - 1 : 0; } }
+    [SerializeField] public float CurrentSkillValue { get { return valueByRank[SkillRankIndex]; } }
     [SerializeField] public float skillAvailable = 0.00f;
 
     public int SkillRank { get { return skillRank; } set { if (value > 0 && value <= maxRank) skillRank = value; } }

@@ -34,7 +34,7 @@ public class TemporaryExistence : MonoBehaviour
         }
         if (Time.fixedTime > timeDone)
         {
-            gameObject.SetActive(false);
+            OnDisappear();
         }
     }
 
@@ -50,7 +50,7 @@ public class TemporaryExistence : MonoBehaviour
 
     public virtual void OnDisappear()
     {
-
+        gameObject.SetActive(false);
     }
 
     public virtual void OnUpdate()

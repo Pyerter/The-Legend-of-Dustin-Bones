@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd79a6c8bf4c9be44b80dd519b7bb8ec, type: 3}
+  m_Name: BoneThrow
+  m_EditorClassIdentifier: 
+  displayName: Bone Throw
+  skillCooldown: 0.15
+  maxRank: 5
+  valueByRank:
+  - 1
+  - 1.2
+  - 1.4
+  - 1.6
+  - 2
+  skillPrefab: {fileID: 5217920517560967437, guid: a40d20b376f7f4f46adcbdd672384726, type: 3}
+  skillRank: 0
+  skillAvailable: 0
+  skillSprite: {fileID: 2050001065, guid: 4a5cba4ebad424f498b23da2249afbf4, type: 3}
