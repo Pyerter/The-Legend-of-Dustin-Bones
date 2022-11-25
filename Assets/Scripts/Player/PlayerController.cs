@@ -175,6 +175,8 @@ public class PlayerController : MonoBehaviour, PlayerControls.IInPlayActions
 
     public void UpdateActiveSkillInputs()
     {
+        skillManager.TryAutofires(transform, playerLookDirector.transform);
+
         if (skill1AutoFire != 0f && Time.fixedTime > skill1AutoFire)
             skillManager.UseSkill1(transform, playerLookDirector.transform);
         if (skill2AutoFire != 0f && Time.fixedTime > skill2AutoFire)

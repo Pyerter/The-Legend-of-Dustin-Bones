@@ -14,6 +14,10 @@ public class PlayerSkillManager : MonoBehaviour
     [SerializeField] public ActiveSkill skill2;
     [SerializeField] public ActiveSkill skill3;
 
+    [SerializeField] public bool autofireSkill1;
+    [SerializeField] public bool autofireSkill2;
+    [SerializeField] public bool autofireSkill3;
+
     [SerializeField] public HudSkillIndicator skill1HudIndicator;
     [SerializeField] public HudSkillIndicator skill2HudIndicator;
     [SerializeField] public HudSkillIndicator skill3HudIndicator;
@@ -60,6 +64,16 @@ public class PlayerSkillManager : MonoBehaviour
             skill2?.UpdateSkillImageFill(skill2HudIndicator);
             skill3?.UpdateSkillImageFill(skill3HudIndicator);
         }
+    }
+
+    public void TryAutofires(Transform stationaryTransform, Transform launchTransform)
+    {
+        if (autofireSkill1)
+            UseSkill1(stationaryTransform, launchTransform);
+        if (autofireSkill2)
+            UseSkill2(stationaryTransform, launchTransform);
+        if (autofireSkill3)
+            UseSkill3(stationaryTransform, launchTransform);
     }
 
     public bool UseSkill1(Transform stationaryTransform, Transform launchTransform)

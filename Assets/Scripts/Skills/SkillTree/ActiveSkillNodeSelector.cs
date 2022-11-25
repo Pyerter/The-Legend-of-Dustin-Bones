@@ -8,9 +8,11 @@ public class ActiveSkillNodeSelector : MonoBehaviour
 {
     [SerializeField] public EventSystem eventSystem;
     [SerializeField] public InventoryManager inventoryManager;
-    [SerializeField] public TextMeshProUGUI text;
+    [SerializeField] public TextMeshProUGUI skillText;
+    [SerializeField] public TextMeshProUGUI autofireText;
 
     [SerializeField] public ActiveSkill activeSkill;
+    [SerializeField] public bool autoFireSkill;
 
     private void Awake()
     {
@@ -23,15 +25,15 @@ public class ActiveSkillNodeSelector : MonoBehaviour
         {
             eventSystem = FindObjectOfType<EventSystem>();
         }
-        if (text == null)
+        if (skillText == null)
         {
-            text = GetComponentInChildren<TextMeshProUGUI>();
+            skillText = GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
     public void BeginActiveSkillSelection()
     {
-        text.text = "...";
+        skillText.text = "...";
         inventoryManager.BeginActiveSkillSelection(this);
     }
 
@@ -40,10 +42,16 @@ public class ActiveSkillNodeSelector : MonoBehaviour
         activeSkill = skill;
         if (skill != null)
         {
-            text.text = skill.displayName;
+            skillText.text = skill.displayName;
         } else
         {
-            text.text = "Nada";
+            skillText.text = "Nada";
         }
+    }
+
+    public void ToggleAutofire()
+    {
+        autoFireSkill = !autoFireSkill;
+        autofireText.text = autoFireSkill ? "A" : "X";
     }
 }
