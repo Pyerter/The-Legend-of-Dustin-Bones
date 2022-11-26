@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//[CreateAssetMenu(fileName = "activeSkill", menuName = "Skills/Active Skill", order = 1)]
+//[CreateAssetMenu(fileName = "activeSkill", menuName = "Skills/Active Skills/Skill Name", order = 1)]
 public abstract class ActiveSkill : PlayerSkill<ActiveSkill>
 {
     [Header("Active Skill References")]
     [SerializeField] public Sprite skillSprite;
+    [SerializeField] public bool delayToFixedUpdate = false;
 
     public bool UseSkill(Transform stationaryTransform, Transform launchTransform, PowerStats powerStats)
     {
@@ -30,7 +31,12 @@ public abstract class ActiveSkill : PlayerSkill<ActiveSkill>
     }
 
     public abstract bool TriggerSkill(Transform stationaryTransform, Transform launchTransform, PowerStats powerStats);
-    public abstract void AlignSkillImage(Image image);
+    public virtual void AlignSkillImage(Image image)
+    {
+        image.sprite = skillSprite;
+        image.SetNativeSize();
+        image.rectTransform.rect.Set(image.rectTransform.rect.x, image.rectTransform.rect.y, image.rectTransform.rect.width * 3 / 2, image.rectTransform.rect.height * 3 / 2);
+    }
 
     public void UpdateSkillImageFill(HudSkillIndicator indicator)
     {

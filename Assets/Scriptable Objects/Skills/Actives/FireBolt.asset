@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd79a6c8bf4c9be44b80dd519b7bb8ec, type: 3}
   m_Name: FireBolt
   m_EditorClassIdentifier: 
-  displayName: Cool Skill
+  displayName: Fire Bolt
   skillCooldown: 0.3
   maxRank: 5
   valueByRank:

@@ -280,9 +280,9 @@ public class InventoryManager : MonoBehaviour
 
     public void ApplySkillSelections()
     {
-        player.skillManager.skill1 = activeSkillSelector1.activeSkill;
-        player.skillManager.skill2 = activeSkillSelector2.activeSkill;
-        player.skillManager.skill3 = activeSkillSelector3.activeSkill;
+        player.skillManager.Skill1 = activeSkillSelector1.activeSkill;
+        player.skillManager.Skill2 = activeSkillSelector2.activeSkill;
+        player.skillManager.Skill3 = activeSkillSelector3.activeSkill;
         player.skillManager.autofireSkill1 = activeSkillSelector1.autoFireSkill;
         player.skillManager.autofireSkill2 = activeSkillSelector2.autoFireSkill;
         player.skillManager.autofireSkill3 = activeSkillSelector3.autoFireSkill;

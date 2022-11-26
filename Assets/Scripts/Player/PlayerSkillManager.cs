@@ -10,13 +10,21 @@ public class PlayerSkillManager : MonoBehaviour
 
     [SerializeField] public PowerStats powerStats = new PowerStats();
 
-    [SerializeField] public ActiveSkill skill1;
-    [SerializeField] public ActiveSkill skill2;
-    [SerializeField] public ActiveSkill skill3;
+    [SerializeField] protected ActiveSkill skill1;
+    [SerializeField] protected ActiveSkill skill2;
+    [SerializeField] protected ActiveSkill skill3;
+
+    public ActiveSkill Skill1 { get { return skill1; } set { skill1 = value; } }
+    public ActiveSkill Skill2 { get { return skill2; } set { skill2 = value; } }
+    public ActiveSkill Skill3 { get { return skill3; } set { skill3 = value; } }
 
     [SerializeField] public bool autofireSkill1;
     [SerializeField] public bool autofireSkill2;
     [SerializeField] public bool autofireSkill3;
+
+    [SerializeField] public bool skill1PendingUse;
+    [SerializeField] public bool skill2PendingUse;
+    [SerializeField] public bool skill3PendingUse;
 
     [SerializeField] public HudSkillIndicator skill1HudIndicator;
     [SerializeField] public HudSkillIndicator skill2HudIndicator;
@@ -68,26 +76,50 @@ public class PlayerSkillManager : MonoBehaviour
 
     public void TryAutofires(Transform stationaryTransform, Transform launchTransform)
     {
-        if (autofireSkill1)
-            UseSkill1(stationaryTransform, launchTransform);
-        if (autofireSkill2)
-            UseSkill2(stationaryTransform, launchTransform);
-        if (autofireSkill3)
-            UseSkill3(stationaryTransform, launchTransform);
+        if (autofireSkill1 || skill1PendingUse)
+        {
+            UseSkill1(stationaryTransform, launchTransform, skill1PendingUse);
+            skill1PendingUse = false;
+        }
+        if (autofireSkill2 || skill2PendingUse)
+        {
+            UseSkill2(stationaryTransform, launchTransform, skill2PendingUse);
+            skill2PendingUse = false;
+        }
+        if (autofireSkill3 || skill3PendingUse)
+        {
+            UseSkill3(stationaryTransform, launchTransform, skill3PendingUse);
+            skill3PendingUse = false;
+        }
     }
 
-    public bool UseSkill1(Transform stationaryTransform, Transform launchTransform)
+    public bool UseSkill1(Transform stationaryTransform, Transform launchTransform, bool duringUpdate = false)
     {
+        if (skill1.delayToFixedUpdate && !duringUpdate)
+        {
+            skill1PendingUse = true;
+            return false;
+        }
         return skill1 != null ? skill1.UseSkill(stationaryTransform, launchTransform, powerStats) : false;
     }
 
-    public bool UseSkill2(Transform stationaryTransform, Transform launchTransform)
+    public bool UseSkill2(Transform stationaryTransform, Transform launchTransform, bool duringUpdate = false)
     {
+        if (skill2.delayToFixedUpdate && !duringUpdate)
+        {
+            skill2PendingUse = true;
+            return false;
+        }
         return skill2 != null ? skill2.UseSkill(stationaryTransform, launchTransform, powerStats) : false;
     }
 
-    public bool UseSkill3(Transform stationaryTransform, Transform launchTransform)
+    public bool UseSkill3(Transform stationaryTransform, Transform launchTransform, bool duringUpdate = false)
     {
+        if (skill3.delayToFixedUpdate && !duringUpdate)
+        {
+            skill3PendingUse = true;
+            return false;
+        }
         return skill3 != null ? skill3.UseSkill(stationaryTransform, launchTransform, powerStats) : false;
     }
 
