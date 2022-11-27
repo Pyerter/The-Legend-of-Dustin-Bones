@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
     [SerializeField] PlayerController player;
     [SerializeField] TextMeshProUGUI pointsLeftInidicator;
+    [SerializeField] SkillDescriptor skillDescriptor;
+    [SerializeField] public EventSystem eventSystem;
 
     [SerializeField] public List<SkillNode> unlockedSkills = new List<SkillNode>();
     [SerializeField] public ActiveSkillNodeSelector activeSkillSelector1;
@@ -33,6 +36,10 @@ public class InventoryManager : MonoBehaviour
         if (player == null)
         {
             player = FindObjectOfType<PlayerController>();
+        }
+        if (eventSystem == null)
+        {
+            eventSystem = FindObjectOfType<EventSystem>();
         }
 
         SkillPointsUsed = 0;
@@ -288,5 +295,10 @@ public class InventoryManager : MonoBehaviour
         player.skillManager.autofireSkill3 = activeSkillSelector3.autoFireSkill;
         player.skillManager.pendingPassiveSkills = GetAllPassiveSkills();
         player.skillManager.UpdateSkillAssignments();
+    }
+
+    public void UpdateSkillDescription(SkillNode node)
+    {
+        skillDescriptor.SetText(node);
     }
 }

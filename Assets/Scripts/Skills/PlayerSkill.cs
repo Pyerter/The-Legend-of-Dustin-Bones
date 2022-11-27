@@ -8,6 +8,7 @@ public abstract class PlayerSkill<S> : ScriptableObject where S : PlayerSkill<S>
 
     [Header("Tweakable Variables")]
     [SerializeField] public string displayName = "Cool Skill";
+    [SerializeField] public string skillDescription = "Does cool things.";
     [SerializeField] public float skillCooldown = 0.1f;
     [SerializeField] public int maxRank = 5;
     [SerializeField] public float[] valueByRank = new float[5];
